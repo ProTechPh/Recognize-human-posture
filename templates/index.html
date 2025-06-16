@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Posture Analysis</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #4CAF50;
+            --danger: #f44336;
+            --warning: #ff9800;
+            --dark: #333;
+            --light: #f8f9fa;
+            --shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f0f2f5;
+            color: var(--dark);
+            line-height: 1.6;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #43a047 0%, #2e7d32 100%);
+            color: white;
+            padding: 1.5rem 0;
+            text-align: center;
+            box-shadow: var(--shadow);
+        }
+        
+        .header h1 {
+            font-size: 2.2rem;
+            font-weight: 600;
+        }
+        
+        .header p {
+            font-size: 1rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0.5rem auto;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            margin-bottom: 2rem;
+        }
+        
+        .card-header {
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .card-header h2 {
+            font-size: 1.25rem;
+            font-weight: 500;
+        }
+        
+        .card-body {
+            padding: 1.5rem;
+        }
+        
+        .status {
+            display: inline-block;
+            padding: 0.35rem 0.75rem;
+            border-radius: 50px;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+        
+        .status-active {
+            background-color: rgba(76, 175, 80, 0.15);
+            color: var(--primary);
+        }
+        
+        .video-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+        
+        .video-container img {
+            width: 100%;
+            display: block;
+            border-radius: 8px;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        
+        .stat-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .stat-card h3 {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        
+        .stat-card p {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        .stat-good h3 {
+            color: var(--primary);
+        }
+        
+        .stat-bad h3 {
+            color: var(--danger);
+        }
+        
+        .instructions {
+            background-color: rgba(255, 152, 0, 0.1);
+            border-left: 4px solid var(--warning);
+            padding: 1rem 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 4px;
+        }
+        
+        .instructions h3 {
+            color: var(--warning);
+            margin-bottom: 0.5rem;
+        }
+        
+        .instructions ul {
+            padding-left: 1.5rem;
+        }
+        
+        .instructions li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .footer {
+            text-align: center;
+            padding: 1.5rem;
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 768px) {
+            .stats-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            
+            .header h1 {
+                font-size: 1.8rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Posture Analysis System</h1>
+        <p>Real-time posture monitoring to help you maintain a healthy spine</p>
+    </div>
+    
+    <div class="container">
+        <div class="card">
+            <div class="card-header">
+                <h2>Live Analysis</h2>
+                <span class="status status-active">MediaPipe Active</span>
+            </div>
+            <div class="card-body">
+                <div class="instructions">
+                    <h3>How to use:</h3>
+                    <ul>
+                        <li>Position yourself so your <strong>side profile</strong> is visible to the camera</li>
+                        <li>Keep your head straight and shoulders back for good posture</li>
+                        <li>The system will analyze your neck and torso angles in real-time</li>
+                        <li>Green lines indicate good posture, red lines indicate poor posture</li>
+                    </ul>
+                </div>
+                
+                <div class="video-container">
+                    <img src="{{ url_for('video_feed') }}" alt="Posture Analysis Video Feed">
+                </div>
+                
+                <div class="stats-grid">
+                    <div class="stat-card stat-good">
+                        <h3>Proper Posture</h3>
+                        <p>Keep your neck angle < 40° and torso angle < 10°</p>
+                    </div>
+                    <div class="stat-card stat-bad">
+                        <h3>Poor Posture</h3>
+                        <p>Neck angle > 40° or torso angle > 10° indicates slouching</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Alignment</h3>
+                        <p>Position yourself so the "Aligned" indicator appears</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Take Breaks</h3>
+                        <p>Stand up and stretch every 30 minutes</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card">
+            <div class="card-header">
+                <h2>Health Benefits</h2>
+            </div>
+            <div class="card-body">
+                <p>Maintaining good posture helps prevent:</p>
+                <ul>
+                    <li>Neck and back pain</li>
+                    <li>Muscle fatigue and strain</li>
+                    <li>Spinal dysfunction</li>
+                    <li>Joint degeneration</li>
+                    <li>Poor circulation</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+    <div class="footer">
+        <p>Posture Analysis System using MediaPipe and OpenCV</p>
+    </div>
+</body>
+</html> 
