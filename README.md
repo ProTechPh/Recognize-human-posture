@@ -23,7 +23,7 @@ A real-time posture recognition and analysis system built with Python, OpenCV, a
 
 1. Clone this repository:
 ```
-git clone https://github.com/yourusername/posture-analysis.git
+git clone https://github.com/ProTechPh/Recognize-human-posture.git
 cd posture-analysis
 ```
 
